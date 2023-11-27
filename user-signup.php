@@ -24,13 +24,11 @@
 			//declare a varible which will be passed to alert function
 			if($stmt)
 			{
-				$success = "Created Account Proceed To Log In";
+				$success = "Registered Successfully! Proceed To Log In";
 			}
 			else {
-				$err = "Please Try Again Or Try Later";
+				$err = "Please Try Again Or Try Later!";
 			}
-			
-			
 		}
 ?>
 <!--End Server Side-->
@@ -63,7 +61,7 @@
 									<script>
 												setTimeout(function () 
 												{ 
-													swal("Success!","<?php echo $success;?>!","success");
+													swal("Success!","<?php echo $success;?>","success");
 												},
 													100);
 									</script>
@@ -74,7 +72,7 @@
 									<script>
 												setTimeout(function () 
 												{ 
-													swal("Failed!","<?php echo $err;?>!","Failed");
+													swal("Failed!","<?php echo $err;?>","Failed");
 												},
 													100);
 									</script>
@@ -86,29 +84,33 @@
                   <div class="login-form">
 
                     <div class="form-group">
-                      <input class="form-control" name="user_uname" type="text" placeholder="Enter Your Username" autocomplete="on">
+                      <input class="form-control" name="user_uname" type="text" placeholder="Enter Your Username" autocomplete="on" required>
                     </div>
                     <div class="form-group">
-                      <input class="form-control" name="user_fname" type="text" placeholder="Enter Your First Name" autocomplete="on">
+                      <input class="form-control" name="user_fname" type="text" placeholder="Enter Your First Name" autocomplete="on" required>
                     </div>
                     <div class="form-group">
                       <input class="form-control" name="user_lname" type="text" placeholder="Enter Your Last Name" autocomplete="on">
                     </div>
                     <div class="form-group">
-                      <input class="form-control" name="user_email" type="email" placeholder="Enter Your Email Address" autocomplete="on">
+                      <input class="form-control" name="user_email" type="email" placeholder="Enter Your Email Address" autocomplete="on" required>
                     </div>
                     <div class="form-group">
-                      <input class="form-control" name="user_phone" type="text" placeholder="Enter Your Phone Number" autocomplete="on">
+                      <input class="form-control" name="user_phone" type="text" placeholder="Enter Your Phone Number" autocomplete="on" required>
                     </div>
                     <div class="form-group">
-                      <input class="form-control" name="user_addr" type="text" placeholder="Enter Your Country" autocomplete="on">
+                      <select class="form-control" name="user_addr" required>
+                        <option value="">Enter Your Country</option>
+                        <option value="IN">India</option>
+                        <option value="OIN">Outside India</option>
+                      </select>
                     </div>
                     <div class="form-group">
-                      <input class="form-control" name="user_pwd" type="password" placeholder="Password">
+                      <input class="form-control" name="user_pwd" type="password" placeholder="Password" required>
                     </div>
                     <div class="form-group row login-submit">
-                      <div class="col-6"><a class="btn btn-outline-success btn-xl" href="user-login.php">Login</a></div>
-                      <div class="col-6"><input type = "submit" name ="user_register" class="btn btn-outline-danger btn-xl" value ="Register"></div>
+                      <div class="col-6"><a class="btn btn-outline-danger btn-xl" href="user-login.php">Cancel</a></div>
+                      <div class="col-6"><input type = "submit" name ="user_register" class="btn btn-success btn-xl" value ="Register"></div>
                     </div>
 
                   </div>

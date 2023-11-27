@@ -1,10 +1,9 @@
-<!--Start Server side code to give us and hold session-->
 <?php
-  session_start();
-  include('assets/inc/config.php');
-  include('assets/inc/checklogin.php');
-  check_login();
-  $aid=$_SESSION['user_id'];
+session_start();
+include('assets/inc/config.php');
+include('assets/inc/checklogin.php');
+check_login();
+$aid=$_SESSION['user_id'];
 ?>
 <!--End Server side scriptiing-->
 <!--Log on to codeastro.com for more projects!-->
@@ -128,7 +127,6 @@
       	//-initialize the javascript
       	App.init();
       	App.dataTables();
-
         // Remove search box from DataTable
         $('#table1_filter').remove();
       });

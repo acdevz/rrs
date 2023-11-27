@@ -65,11 +65,11 @@ if (isset($_POST['user_login'])) {
                 <div class="login-form ">
 
                   <div class="form-group">
-                    <input class="form-control" name="user_name" type="text" placeholder="Username" autocomplete="off">
+                    <input class="form-control" name="user_name" type="text" placeholder="Username" required>
                   </div>
 
                   <div class="form-group">
-                    <input class="form-control" name="user_pwd" type="password" placeholder="Password">
+                    <input class="form-control" name="user_pwd" type="password" placeholder="Password" required>
                   </div>
 
                   <div class="form-group row login-tools">
