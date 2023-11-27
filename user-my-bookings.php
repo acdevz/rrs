@@ -1,10 +1,9 @@
-<!--Start Server side code to give us and hold session-->
 <?php
-  session_start();
-  include('assets/inc/config.php');
-  include('assets/inc/checklogin.php');
-  check_login();
-  $aid=$_SESSION['user_id'];
+session_start();
+include('assets/inc/config.php');
+include('assets/inc/checklogin.php');
+check_login();
+$aid=$_SESSION['user_id'];
 ?>
 <!--End Server side scriptiing-->
 <!DOCTYPE html>
@@ -57,7 +56,7 @@
                   <tbody>
                     <?php
 
-                    $ret = "select T.train_no, T.train_name, P.name passenger_name, 
+                    $ret="select T.train_no, T.train_name, P.name passenger_name, 
                         concat(S1.station_name, ' (', S1.station_code, ')') 'from', 
                         time_format(S1.departure_time, '%H:%i') 'time',
                         concat(S2.station_name, ' (', S2.station_code, ')') 'to',
@@ -73,7 +72,6 @@
                     $stmt->bind_param('s', $aid);
                     $stmt->execute(); //ok
                     $res = $stmt->get_result();
-                    $cnt = 1;
                     while ($row = $res->fetch_object()) {
                     ?>
                       <tr class="odd gradeX even gradeC odd gradeA ">
@@ -91,12 +89,10 @@
                           </a>
                         </td>
                       </tr>
-
-                    <?php $cnt = $cnt + 1;
+                    <?php
                     } ?>
                   </tbody>
                 </table>
-                <!--End Table-->
               </div>
             </div>
           </div>
@@ -124,7 +120,7 @@
                   <tbody>
                     <?php
 
-                    $ret = "select T.train_no, T.train_name, P.name passenger_name,
+                    $ret="select T.train_no, T.train_name, P.name passenger_name,
                         concat(S1.station_name, ' (', S1.station_code, ')') 'from', 
                         time_format(S1.departure_time, '%H:%i') 'time', 
                         concat(S2.station_name, ' (', S2.station_code, ')') 'to',
@@ -140,7 +136,6 @@
                     $stmt->bind_param('s', $aid);
                     $stmt->execute(); //ok
                     $res = $stmt->get_result();
-                    $cnt = 1;
                     while ($row = $res->fetch_object()) {
                     ?>
                       <tr class="odd gradeX even gradeC odd gradeA ">
@@ -157,8 +152,7 @@
                           </a>
                         </td>
                       </tr>
-
-                    <?php $cnt = $cnt + 1;
+                    <?php
                     } ?>
                   </tbody>
                 </table>

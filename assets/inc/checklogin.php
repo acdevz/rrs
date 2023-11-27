@@ -7,7 +7,10 @@ if(strlen($_SESSION['user_id'])==0)
 		$uri  = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
 		$extra="user-login.php";
 		$_SESSION["user_id"]="";
-		header("Location: http://$host$uri/$extra");
+		if($host == 'localhost')
+			header("Location: user-login.php");
+		else
+			header("Location: https://$host$uri/$extra");
 	}
 }
 ?>

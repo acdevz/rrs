@@ -188,7 +188,7 @@
       }
       else
       {
-        $err = "Failed! Please Try Again Or Try Later";
+        $err = "Please Try Again Or Try Later";
       }
     }
 ?>
@@ -222,7 +222,7 @@
                 <script>
                             setTimeout(function () 
                             { 
-                                swal("Success!","<?php echo $succ;?>!","success");
+                                swal("Success!","<?php echo $succ;?>","success");
                             },
                                 100);
                 </script>
@@ -233,7 +233,7 @@
                 <script>
                             setTimeout(function () 
                             { 
-                                swal("Failed!","<?php echo $err;?>!","Failed");
+                                swal("Failed!","<?php echo $err;?>","Failed");
                             },
                                 100);
                 </script>

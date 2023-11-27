@@ -121,7 +121,7 @@
                       <label class="col-12 col-sm-3 col-form-label text-sm-right" for="inputText3"> Gender</label>
                       <div class="col-12 col-sm-8 col-lg-6">
                         <select class="form-control" name="user_gender" id="inputText3" type="text">
-                          <option value=""><?php echo $row->gender ?></option>
+                          <option value="<?php echo $row->gender ?>"><?php echo $row->gender ?></option>
                           <option value="M"> M </option>
                           <option value="F"> F </option>
                         </select>

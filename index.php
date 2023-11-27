@@ -14,7 +14,7 @@
 
 				<!-- Header -->
 					<header id="header" class="alt">
-						<h1><a href="index.php">Online Railway Reservation System</a></h1>
+						<h1><a href="index.php">Railway Reservation System</a></h1>
 						<nav>
 							<a href="#menu">Menu</a>
 						</nav>

@@ -125,7 +125,7 @@ $aid = $_SESSION['user_id'];
               <div class="card-header my-2">Past Journey</div>
               <div class="card-body">
                 <!--Start Table-->
-                <table class="table table-striped table-bordered table-hover table-fw-widget" id="table1">
+                <table class="table table-striped table-bordered table-hover table-fw-widget" id="table2">
                   <thead class="thead-dark">
                     <tr>
                       <th>Train #</th>
@@ -221,8 +221,7 @@ $aid = $_SESSION['user_id'];
     $(document).ready(function() {
       //-initialize the javascript
       App.init();
-      App.dashboard();
-
+      App.dataTables();
     });
   </script>
 </body>

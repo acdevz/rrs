@@ -96,11 +96,11 @@
 
       if($stmt_pass && $stmt_ticket && $stmt_status)
       {
-          $succ = "Booking Successful!";
+          $succ = "Please Wait! Redirecting...";
       }
       else 
       {
-          $err = "Failed! Please Try Again Later";
+          $err = "Please Try Again Later.";
       }
     }
 ?>
@@ -132,11 +132,12 @@
             <?php if(isset($succ)) {?>
                                 <!--This code for injecting an alert-->
                 <script>
+                            swal("Success!","<?php echo $succ;?>","success");
                             setTimeout(function () 
                             { 
-                                swal("Success!","<?php echo $succ;?>!","success");
+                                window.location.href="./user-print-ticket.php?ticket_id=<?php echo $ticket_id;?>&train_no=<?php echo $pass_train_no;?>&from=<?php echo $pass_from;?>&to=<?php echo $pass_to;?>";
                             },
-                                100);
+                                1000);
                 </script>
 
         <?php } ?>
@@ -145,7 +146,7 @@
                 <script>
                             setTimeout(function () 
                             { 
-                                swal("Failed!","<?php echo $err;?>!","Failed");
+                                swal("Failed!","<?php echo $err;?>","Failed");
                             },
                                 100);
                 </script>
