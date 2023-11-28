@@ -67,7 +67,7 @@ $aid=$_SESSION['user_id'];
                         and TK.train_no = T.train_no
                         and S1.train_no = T.train_no and TK.from = S1.station_code
                         and S2.train_no = T.train_no and TK.to = S2.station_code
-                        and TK.date >= current_date();";
+                        and TK.date >= current_date() and TK.status != 'CNL';";
                     $stmt = $mysqli->prepare($ret);
                     $stmt->bind_param('s', $aid);
                     $stmt->execute(); //ok
@@ -131,7 +131,7 @@ $aid=$_SESSION['user_id'];
                         and TK.train_no = T.train_no
                         and S1.train_no = T.train_no and TK.from = S1.station_code
                         and S2.train_no = T.train_no and TK.to = S2.station_code
-                        and TK.date < current_date();";
+                        and TK.date < current_date() and TK.status != 'CNL';";
                     $stmt = $mysqli->prepare($ret);
                     $stmt->bind_param('s', $aid);
                     $stmt->execute(); //ok
@@ -147,9 +147,67 @@ $aid=$_SESSION['user_id'];
                         <td><?php echo $row->to; ?></td>
                         <td><?php echo $row->date; ?></td>
                         <td>
-                          <a href="user-print-ticket.php?ticket_id=<?php echo $row->ticket_id;?>&train_no=<?php echo $row->train_no;?>&from=<?php echo $row->from;?>&to=<?php echo $row->to;?>">
-                            <button class="btn btn-info btn-md"><i class="fa fa-view"></i> View</button>
-                          </a>
+                        </td>
+                      </tr>
+                    <?php
+                    } ?>
+                  </tbody>
+                </table>
+                <!--End Table-->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="card card-table">
+              <div class="card-header card-header-divider">Cancelled</div>
+              <div class="card-body">
+                <!--Start Table-->
+                <table class="table table-striped table-bordered table-hover table-fw-widget" id="table3">
+                  <thead class="thead-dark">
+                    <tr>
+                      <th>Train #</th>
+                      <th>Train</th>
+                      <th>Passenger Name</th>
+                      <th>From</th>
+                      <th>Time</th>
+                      <th>To</th>
+                      <th>Date</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php
+
+                    $ret="select T.train_no, T.train_name, P.name passenger_name,
+                        concat(S1.station_name, ' (', S1.station_code, ')') 'from', 
+                        time_format(S1.departure_time, '%H:%i') 'time', 
+                        concat(S2.station_name, ' (', S2.station_code, ')') 'to',
+                        TK.date, TK.status, TK.ticket_id, TK.from 'from_code', TK.to 'to_code'
+                        from PASSENGER P, TICKET TK, TRAIN T, STATION S1, STATION S2
+                        where TK.username = ?
+                        and P.ticket_id = TK.ticket_id 
+                        and TK.train_no = T.train_no
+                        and S1.train_no = T.train_no and TK.from = S1.station_code
+                        and S2.train_no = T.train_no and TK.to = S2.station_code
+                        and TK.status = 'CNL';";
+                    $stmt = $mysqli->prepare($ret);
+                    $stmt->bind_param('s', $aid);
+                    $stmt->execute(); //ok
+                    $res = $stmt->get_result();
+                    while ($row = $res->fetch_object()) {
+                    ?>
+                      <tr class="odd gradeX even gradeC odd gradeA ">
+                        <td><?php echo $row->train_no; ?></td>
+                        <td><?php echo $row->train_name; ?></td>
+                        <td><?php echo $row->passenger_name; ?></td>
+                        <td><?php echo $row->from ?></td>
+                        <td><?php echo $row->time ?></td>
+                        <td><?php echo $row->to; ?></td>
+                        <td><?php echo $row->date; ?></td>
+                        <td>
                         </td>
                       </tr>
                     <?php

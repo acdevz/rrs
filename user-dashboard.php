@@ -29,9 +29,9 @@ $aid = $_SESSION['user_id'];
           <div class="col-12 col-lg-6 col-xl-4">
             <a href="user-my-bookings.php">
               <div class="widget widget-tile">
-                <div class="chart sparkline"><i class="material-icons">add_shopping_cart</i></div>
+                <div class="chart sparkline"><span class="icon"><span class="material-symbols-outlined">confirmation_number</span></span></div>
                 <div class="data-info">
-                  <div class="desc">My Bookings</div>
+                  <div class="h4">My Bookings</div>
                 </div>
               </div>
             </a>
@@ -40,9 +40,9 @@ $aid = $_SESSION['user_id'];
           <div class="col-12 col-lg-6 col-xl-4">
             <a href="user-cancel-train.php">
               <div class="widget widget-tile">
-                <div class="chart sparkline"><i class="material-icons">backspace</i></div>
+                <div class="chart sparkline"><span class="icon"><span class="material-symbols-outlined">scan_delete</span></span></div>
                 <div class="data-info">
-                  <div class="desc">Cancel Ticket</div>
+                  <div class="h4">Cancel Ticket</div>
                 </div>
               </div>
             </a>
@@ -51,9 +51,9 @@ $aid = $_SESSION['user_id'];
           <div class="col-12 col-lg-6 col-xl-4">
             <a href="user-train-schedule.php">
               <div class="widget widget-tile">
-                <div class="chart sparkline"><i class="material-icons">burst_mode</i></div>
+                <div class="chart sparkline"><span class="icon"><span class="material-symbols-outlined">departure_board</span></span></div>
                 <div class="data-info">
-                  <div class="desc">Train Schedule</div>
+                  <div class="h4">Train Schedule</div>
                 </div>
               </div>
             </a>
@@ -91,7 +91,7 @@ $aid = $_SESSION['user_id'];
                         and TK.train_no = T.train_no
                         and S1.train_no = T.train_no and TK.from = S1.station_code
                         and S2.train_no = T.train_no and TK.to = S2.station_code
-                        and TK.date >= current_date();";
+                        and TK.date >= current_date() and TK.status != 'CNL';";
                     $stmt = $mysqli->prepare($ret);
                     $stmt->bind_param('s', $aid);
                     $stmt->execute(); //ok
@@ -150,7 +150,7 @@ $aid = $_SESSION['user_id'];
                         and TK.train_no = T.train_no
                         and S1.train_no = T.train_no and TK.from = S1.station_code
                         and S2.train_no = T.train_no and TK.to = S2.station_code
-                        and TK.date < current_date();";
+                        and TK.date < current_date() and TK.status != 'CNL';";
                     $stmt = $mysqli->prepare($ret);
                     $stmt->bind_param('s', $aid);
                     $stmt->execute(); //ok

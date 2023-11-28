@@ -68,7 +68,7 @@ $aid=$_SESSION['user_id'];
                         and TK.train_no = T.train_no
                         and S1.train_no = T.train_no and TK.from = S1.station_code
                         and S2.train_no = T.train_no and TK.to = S2.station_code
-                        and TK.date >= current_date()
+                        and TK.date >= current_date() and TK.status != 'CNL'
                         order by TK.date ASC;";
                         $stmt= $mysqli->prepare($ret) ;
                         $stmt->bind_param('s',$aid);

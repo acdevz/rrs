@@ -4,7 +4,9 @@
 		<title>Railway Reservation System</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="shortcut icon" href="assets/img/favicon.ico">
 		<link rel="stylesheet" href="includes/css/main.css" />
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 		<noscript><link rel="stylesheet" href="includes/css/noscript.css" /></noscript>
 	</head>
 	<body class="is-preload">
@@ -25,23 +27,41 @@
 						<div class="inner">
 							<h2>Menu</h2>
 							<ul class="links">
-								<li><a href="index.php">Home</a></li>
-								<li><a href="user-login.php">User Login</a></li>
-								<li><a href="404.php">Admin Login</a></li>
+								<li><a href="#">Home</a></li>
+								<li><a href="#">Site Map</a></li>
+								<li><a href="#">About Us</a></li>
 							</ul>
 							<a href="#" class="close">Close</a>
 						</div>
 					</nav>
 
-				<!-- Banner -->
+					<!-- Banner -->
 					<section id="banner">
 						<div class="inner">
 							<div class="logo"><span class="icon solid fa-train"></span></div>
-							<h2>Indian Railway Reservation System</h2>
+							<h2>Indian Railways</h2>
 							<p>Simple and User Friendly Way To Reserve Train Tickets Effectively</a></p>
 						</div>
+						
+						<!-- adding a circle enter buttons -->
+						<div class="inner">
+							<div class="row">
+							<a href="user-login.php" style="border:none">
+								<div class="logo">
+									<span class="icon solid fa-user"></span>
+								</div>
+								<p>User Login</p>
+							</a>
+							<a href="404.php" style="border:none">
+								<div class="logo">
+									<span class="icon solid fa-user-secret"></span>
+								</div>
+								<p>Admin Login</p>
+							</a>
+							</div>
+						</div>
 					</section>
-
+							
 					<section id="footer">
 						<div class="inner">
 							<h2 class="major">Get in touch</h2>
@@ -55,7 +75,7 @@
 								<li class="icon solid fa-envelope"><a href="#">support@rrs.com</a></li>
 							</ul>
 							<ul class="copyright">
-								<li>&copy; Railway Reservation System.</li><li>Developed with ❤️ by team.</li>
+								<li>&copy; Railway Reservation System.</li>
 							</ul>
 						</div>
 					</section>

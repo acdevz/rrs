@@ -42,7 +42,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="shortcut icon" href="assets/img/favicon.ico">
-    <title>Online Railway Reservation System</title>
+    <title>Railway Reservation System</title>
     <link rel="stylesheet" type="text/css" href="assets/lib/perfect-scrollbar/css/perfect-scrollbar.css"/>
     <link rel="stylesheet" type="text/css" href="assets/lib/material-design-icons/css/material-design-iconic-font.min.css"/>
     <link rel="stylesheet" href="assets/css/app.css" type="text/css"/>
@@ -84,29 +84,29 @@
                   <div class="login-form">
 
                     <div class="form-group">
-                      <input class="form-control" name="user_uname" type="text" placeholder="Enter Your Username" autocomplete="on" required>
+                      <input class="form-control" name="user_uname" type="text" placeholder="Enter Your Username*" autocomplete="on" required>
                     </div>
                     <div class="form-group">
-                      <input class="form-control" name="user_fname" type="text" placeholder="Enter Your First Name" autocomplete="on" required>
+                      <input class="form-control" name="user_fname" type="text" placeholder="Enter Your First Name*" autocomplete="on" required>
                     </div>
                     <div class="form-group">
                       <input class="form-control" name="user_lname" type="text" placeholder="Enter Your Last Name" autocomplete="on">
                     </div>
                     <div class="form-group">
-                      <input class="form-control" name="user_email" type="email" placeholder="Enter Your Email Address" autocomplete="on" required>
+                      <input class="form-control" name="user_email" type="email" placeholder="Enter Your Email Address*" autocomplete="on" required>
                     </div>
                     <div class="form-group">
-                      <input class="form-control" name="user_phone" type="text" placeholder="Enter Your Phone Number" autocomplete="on" required>
+                      <input class="form-control" name="user_phone" type="text" placeholder="Enter Your Phone Number*" autocomplete="on" required>
                     </div>
                     <div class="form-group">
                       <select class="form-control" name="user_addr" required>
-                        <option value="">Enter Your Country</option>
+                        <option value="">Enter Your Country*</option>
                         <option value="IN">India</option>
                         <option value="OIN">Outside India</option>
                       </select>
                     </div>
                     <div class="form-group">
-                      <input class="form-control" name="user_pwd" type="password" placeholder="Password" required>
+                      <input class="form-control" name="user_pwd" type="password" placeholder="Password*" required>
                     </div>
                     <div class="form-group row login-submit">
                       <div class="col-6"><a class="btn btn-outline-danger btn-xl" href="user-login.php">Cancel</a></div>

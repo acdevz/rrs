@@ -162,11 +162,11 @@
                             <?php echo
                               "<a href='user-book-passenger-details.php?train_no=$row->train_no&train_name=$row->name&from=$row->from&to=$row->to&from_name=$row->from_name&to_name=$row->to_name&from_date=$row->from_date&from_time=$row->from_time&to_date=$row->to_date&to_time=$row->to_time&class=SL&status=$row->status_sl&fare=$row->fare_sl' class='text-reset'>"
                             ?>
-                              <div class="box border rounded <?php echo substr_count($row->status_sl,"WL") ? 'border-danger' : 'border-success'; ?>">
+                              <div class="box border rounded <?php echo substr_count($row->status_sl,"WL") || substr_count($row->status_sl,"NO_AVL") ? 'border-danger' : 'border-success'; ?>">
                                 <div class="box-content px-4 py-2">
                                   <h4 class="class-type m-0 my-1 font-weight-bold">SL</h4>
                                   <div class="d-flex justify-content-between fs-3">
-                                    <div class="font-weight-bold <?php echo substr_count($row->status_sl,"WL") ? 'text-danger' : 'text-success'; ?>"><?php echo $row->status_sl;?></div>
+                                    <div class="font-weight-bold <?php echo substr_count($row->status_sl,"WL") || substr_count($row->status_sl,"NO_AVL") ? 'text-danger' : 'text-success'; ?>"><?php echo $row->status_sl;?></div>
                                     <div>₹ <?php echo $row->fare_sl;?></div>
                                   </div>
                                 </div>
@@ -177,11 +177,11 @@
                             <?php echo
                               "<a href='user-book-passenger-details.php?train_no=$row->train_no&train_name=$row->name&from=$row->from&to=$row->to&from_name=$row->from_name&to_name=$row->to_name&from_date=$row->from_date&from_time=$row->from_time&to_date=$row->to_date&to_time=$row->to_time&class=3A&status=$row->status_3a&fare=$row->fare_3a' class='text-reset'>"
                             ?>
-                              <div class="box border rounded <?php echo substr_count($row->status_3a,"GNWL") ? 'border-danger' : 'border-success'; ?>">
+                              <div class="box border rounded <?php echo substr_count($row->status_3a,"WL") || substr_count($row->status_3a,"NO_AVL") ? 'border-danger' : 'border-success'; ?>">
                                 <div class="box-content px-4 py-2">
                                   <h4 class="class-type m-0 my-1 font-weight-bold">3A</h4>
                                   <div class="d-flex justify-content-between fs-3">
-                                    <div class="font-weight-bold <?php echo substr_count($row->status_3a,"GNWL") ? 'text-danger' : 'text-success'; ?>"><?php echo $row->status_3a;?></div>
+                                    <div class="font-weight-bold <?php echo substr_count($row->status_3a,"WL") || substr_count($row->status_3a,"NO_AVL") ? 'text-danger' : 'text-success'; ?>"><?php echo $row->status_3a;?></div>
                                     <div>₹ <?php echo $row->fare_3a;?></div>
                                   </div>
                                 </div>
@@ -192,11 +192,11 @@
                             <?php echo
                               "<a href='user-book-passenger-details.php?train_no=$row->train_no&train_name=$row->name&from=$row->from&to=$row->to&from_name=$row->from_name&to_name=$row->to_name&from_date=$row->from_date&from_time=$row->from_time&to_date=$row->to_date&to_time=$row->to_time&class=2A&status=$row->status_2a&fare=$row->fare_2a' class='text-reset'>"
                             ?>
-                              <div class="box border rounded <?php echo substr_count($row->status_2a,"WL") ? 'border-danger' : 'border-success'; ?>">
+                              <div class="box border rounded <?php echo substr_count($row->status_2a,"WL") || substr_count($row->status_2a,"NO_AVL") ? 'border-danger' : 'border-success'; ?>">
                                 <div class="box-content px-4 py-2">
                                   <h4 class="class-type m-0 my-1 font-weight-bold">2A</h4>
                                   <div class="d-flex justify-content-between fs-3">
-                                    <div class="font-weight-bold <?php echo substr_count($row->status_2a,"WL") ? 'text-danger' : 'text-success'; ?>"><?php echo $row->status_2a;?></div>
+                                    <div class="font-weight-bold <?php echo substr_count($row->status_2a,"WL") || substr_count($row->status_2a,"NO_AVL") ? 'text-danger' : 'text-success'; ?>"><?php echo $row->status_2a;?></div>
                                     <div>₹ <?php echo $row->fare_2a;?></div>
                                   </div>
                                 </div>
@@ -207,11 +207,11 @@
                             <?php echo
                               "<a href='user-book-passenger-details.php?train_no=$row->train_no&train_name=$row->name&from=$row->from&to=$row->to&from_name=$row->from_name&to_name=$row->to_name&from_date=$row->from_date&from_time=$row->from_time&to_date=$row->to_date&to_time=$row->to_time&class=1A&status=$row->status_1a&fare=$row->fare_1a' class='text-reset'>"
                             ?>
-                              <div class="box border rounded <?php echo substr_count($row->status_1a,"WL") ? 'border-danger' : 'border-success'; ?>">
+                              <div class="box border rounded <?php echo substr_count($row->status_1a,"WL") || substr_count($row->status_1a,"NO_AVL") ? 'border-danger' : 'border-success'; ?>">
                                 <div class="box-content px-4 py-2">
                                   <h4 class="class-type m-0 my-1 font-weight-bold">1A</h4>
                                   <div class="d-flex justify-content-between fs-3">
-                                    <div class="font-weight-bold <?php echo substr_count($row->status_1a,"WL") ? 'text-danger' : 'text-success'; ?>"><?php echo $row->status_1a;?></div>
+                                    <div class="font-weight-bold <?php echo substr_count($row->status_1a,"WL") || substr_count($row->status_1a,"NO_AVL") ? 'text-danger' : 'text-success'; ?>"><?php echo $row->status_1a;?></div>
                                     <div>₹ <?php echo $row->fare_1a;?></div>
                                   </div>
                                 </div>

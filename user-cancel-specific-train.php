@@ -41,11 +41,7 @@
       $stmt_cancel->execute();
 
       //update PASSENGER table
-      // $query="update PASSENGER set class=NULL and seat_no=NULL where passenger_id = ?";
-      // $stmt_pass = $mysqli->prepare($query);
-      // $rc=$stmt_pass->bind_param('i', $pass_id);
-      // $stmt_pass->execute();
-      $query="delete from PASSENGER where passenger_id = ?";
+      $query="update PASSENGER set class=NULL and seat_no=NULL where passenger_id = ?";
       $stmt_pass = $mysqli->prepare($query);
       $rc=$stmt_pass->bind_param('i', $pass_id);
       $stmt_pass->execute();
@@ -55,7 +51,6 @@
       $stmt_ticket_status = $mysqli->prepare($query);
       $rc=$stmt_ticket_status->bind_param('i', $pass_ticket_id);
       $stmt_ticket_status->execute();
-
 
       //max waitlist number
       $max_waitlist_no = 0;
@@ -78,22 +73,22 @@
           $get_pass_status = $row->status;
 
           if(substr_count($get_pass_status, "GNWL")){
-            $st_no = substr($get_pass_status, 4);
-            $get_pass_status_no = intval($st_no);
+            $get_pass_status_no = intval(substr($get_pass_status, 4));
 
             if($get_pass_status_no > $max_waitlist_no){
               $max_waitlist_no = $get_pass_status_no;
             }
             if($get_pass_status_no == 1){
               $ticket_id_got_confirmed = $row->ticket_id;
+              $get_pass_status = 'CNF';
+            }else{
+              $get_pass_status = 'GNWL'.($get_pass_status_no - 1);
             }
-  
-            $get_pass_status = 'GNWL'.($get_pass_status_no - 1);
             $passStatusMap[$row->ticket_id] = $get_pass_status;
           }
         }
       }
-      if(substr_count($pass_status, "GNWL"))
+      else if(substr_count($pass_status, "GNWL"))
       {
         $pass_status_no = intval(substr($pass_status, 4));
 
@@ -101,8 +96,7 @@
           $get_pass_status = $row->status;
 
           if(substr_count($get_pass_status, "GNWL")){
-            $st_no = substr($get_pass_status, 4);
-            $get_pass_status_no = intval($st_no);
+            $get_pass_status_no = intval(substr($get_pass_status, 4));
 
             if($get_pass_status_no > $max_waitlist_no){
               $max_waitlist_no = $get_pass_status_no;
@@ -145,18 +139,22 @@
         {
           $pass_seat = 'S'.rand(1,5).'/'.rand(1,72);
         }
-        $query="update PASSENGER set seat_no = ? where ticket_id = ?;update TICKET set status = 'CNF' where ticket_id = ?";
+        $query="update PASSENGER set seat_no = ? where ticket_id = ?;";
         $stmt_seat_update = $mysqli->prepare($query);
-        $rc=$stmt_seat_update->bind_param('sii', $pass_seat, $ticket_id_got_confirmed, $ticket_id_got_confirmed);
+        $rc=$stmt_seat_update->bind_param('sii', $pass_seat, $ticket_id_got_confirmed);
         $stmt_seat_update->execute();
       }
 
       //update TRAIN_STATUS table
       if($max_waitlist_no != 0)
       {
-        $query="update TRAIN_STATUS set " . "_" . $pass_class ." = "."'GNWL".($max_waitlist_no - 1)."' where train_no = ? and date = ?";
+        $train_status = 'GNWL'.($max_waitlist_no - 1);
+        if($max_waitlist_no == 1){
+          $train_status = 'NO_AVL';
+        }
+        $query="update TRAIN_STATUS set " . "_" . $pass_class ." = ? where train_no = ? and date = ?";
         $stmt_train_status_update = $mysqli->prepare($query); //prepare sql and bind it later
-        $rc=$stmt_train_status_update->bind_param('is', $pass_train_no, $pass_date);
+        $rc=$stmt_train_status_update->bind_param('sis', $train_status, $pass_train_no, $pass_date);
         $stmt_train_status_update->execute();
       }
       else

@@ -41,11 +41,15 @@
         $train_status = 'GNWL'.(intval($st_no) + 1);
         $pass_status = $train_status;
       }
+      else if(substr_count($train_status,"NO_AVL")){
+        $train_status = 'GNWL1';
+        $pass_status = $train_status;
+      }
       else if(substr_count($train_status,"AVL"))
       {
         $st_no = substr($train_status, 3);
         if(intval($st_no) == 1){
-          $train_status = 'GNWL0';
+          $train_status = 'NO_AVL';
         }
         else{
           $train_status = 'AVL'.(intval($st_no) - 1);
@@ -185,7 +189,7 @@
                         <td colspan=2></td>
                       </tr>
                       <tr>
-                        <td class="text-center font-weight-bold h4"><?php echo $pass_class ?> Current <span class="<?php echo substr_count($pass_status,"WL") ? 'text-danger' : 'text-success'; ?>"><?php echo $pass_status;?></span></td>
+                        <td class="text-center font-weight-bold h4"><?php echo $pass_class ?> Current <span class="<?php echo substr_count($pass_status,"WL") || substr_count($pass_status,"NO_AVL") ? 'text-danger' : 'text-success'; ?>"><?php echo $pass_status;?></span></td>
                         <td class="text-center h4"> Total Fare  <span class="font-weight-bold">₹<?php echo $pass_fare; ?>/-</span></td>
                       </tr>
                     </tbody>

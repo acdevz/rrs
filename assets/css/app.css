@@ -12569,7 +12569,7 @@ canvas {
 }
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
   .be-top-header .be-navbar-header .navbar-brand {
-    background-image: url(../img/logo-xx.png);
+    background-image: url(../img/logo.png);
     background-size: 102px 27px;
   }
 }

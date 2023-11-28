@@ -34,9 +34,10 @@ if (isset($_POST['user_login'])) {
   <meta name="description" content="">
   <meta name="author" content="">
   <link rel="shortcut icon" href="assets/img/favicon.ico">
-  <title>RRS</title>
+  <title>Railway Reservation System</title>
   <link rel="stylesheet" type="text/css" href="assets/lib/perfect-scrollbar/css/perfect-scrollbar.css" />
   <link rel="stylesheet" type="text/css" href="assets/lib/material-design-icons/css/material-design-iconic-font.min.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
   <link rel="stylesheet" href="assets/css/app.css" type="text/css" />
   <!--Trigger Sweet Alert-->
   <?php if (isset($error)) { ?>
@@ -91,8 +92,7 @@ if (isset($_POST['user_login'])) {
               <!--End Login-->
             </div>
           </div>
-          <div class="splash-footer"><a href="index.php">Home</a></div>
-
+          <div class="splash-footer"><a href="/">Home</a></div>
         </div>
       </div>
     </div>
