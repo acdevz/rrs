@@ -18,7 +18,7 @@ if (isset($_POST['user_login'])) {
     if($host == 'localhost')
 		  header("Location: user-dashboard.php");
     else
-		  header("Location: https://$host$uri/$extra");
+		  header("Location: http://$host$uri/$extra");
   } else {
     $error = "Access Denied Please Check Your Credentials";
   }

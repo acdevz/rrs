@@ -10,7 +10,7 @@ if(strlen($_SESSION['user_id'])==0)
 		if($host == 'localhost')
 			header("Location: user-login.php");
 		else
-			header("Location: https://$host$uri/$extra");
+			header("Location: http://$host$uri/$extra");
 	}
 }
 ?>
