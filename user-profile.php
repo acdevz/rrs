@@ -145,7 +145,7 @@ $aid=$_SESSION['user_id'];
               })
               .then((willDelete) => {
                 if (willDelete) {
-                  window.location.href = "user-delete.php?username=<?php echo $aid; ?>";
+                  window.location.href = "user-delete.php";
                 }
               });
           });

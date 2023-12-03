@@ -33,6 +33,7 @@
 
     if(isset($_POST['Cancel_Train']))
     {
+      $mysqli->autocommit(false); 
 
       //push to CANCEL table
       $query="insert into CANCEL values (?,?,?)";
@@ -52,12 +53,9 @@
       $rc=$stmt_ticket_status->bind_param('i', $pass_ticket_id);
       $stmt_ticket_status->execute();
 
-      //max waitlist number
-      $max_waitlist_no = 0;
-      //get ticket_id of GNWL1 passenger
-      $ticket_id_got_confirmed = 0;
-      //map of ticket_id and status
-      $passStatusMap = [];
+      
+      
+      /* ******************************************************************************************** */
 
       //update Waitlist for other passengers
       $query="select T.status, T.ticket_id from TICKET T, PASSENGER P where T.ticket_id = P.ticket_id
@@ -67,60 +65,51 @@
       $stmt_pass_status->execute();
       $res=$stmt_pass_status->get_result();
 
+      $stmt_pass_status_update = 'ok';
+      $query = "UPDATE TICKET SET status = ? WHERE ticket_id = ?";
+      $stmt_pass_status_update = $mysqli->prepare($query);
+
       if(substr_count($pass_status, "CNF"))
       {
-        while($row=$res->fetch_object()){
+        while($row = $res->fetch_object()){
+        if(substr_count($row->status, "GNWL")){
           $get_pass_status = $row->status;
+          $get_pass_status_no = intval(substr($get_pass_status, 4));
 
-          if(substr_count($get_pass_status, "GNWL")){
-            $get_pass_status_no = intval(substr($get_pass_status, 4));
-
-            if($get_pass_status_no > $max_waitlist_no){
-              $max_waitlist_no = $get_pass_status_no;
-            }
-            if($get_pass_status_no == 1){
-              $ticket_id_got_confirmed = $row->ticket_id;
-              $get_pass_status = 'CNF';
-            }else{
-              $get_pass_status = 'GNWL'.($get_pass_status_no - 1);
-            }
-            $passStatusMap[$row->ticket_id] = $get_pass_status;
+          if($get_pass_status_no == 1){
+            $GLOBALS['ticket_id_got_confirmed'] = $row->ticket_id;
+            $get_pass_status = 'CNF';
+          }else{
+            $get_pass_status = 'GNWL'.($get_pass_status_no - 1);
           }
-        }
-      }
-      else if(substr_count($pass_status, "GNWL"))
-      {
-        $pass_status_no = intval(substr($pass_status, 4));
 
-        while($row=$res->fetch_object()){
-          $get_pass_status = $row->status;
-
-          if(substr_count($get_pass_status, "GNWL")){
-            $get_pass_status_no = intval(substr($get_pass_status, 4));
-
-            if($get_pass_status_no > $max_waitlist_no){
-              $max_waitlist_no = $get_pass_status_no;
-            }
-
-            if($get_pass_status_no > $pass_status_no){
-              $get_pass_status = 'GNWL'.($get_pass_status_no - 1);
-              $passStatusMap[$row->ticket_id] = $get_pass_status;
-            }
-          }
-        }
-      }
-
-      //update status of all passengers
-      if($max_waitlist_no != 0){
-        $query = "UPDATE TICKET SET status = ? WHERE ticket_id = ?";
-        $stmt_pass_status_update = $mysqli->prepare($query);
-        foreach($passStatusMap as $key => $value){
-          $rc = $stmt_pass_status_update->bind_param('si', $value, $key);
+          //update status of passenger
+          $rc = $stmt_pass_status_update->bind_param('si', $get_pass_status, $row->ticket_id);
           $stmt_pass_status_update->execute();
         }
+        }
       }
 
-      if($ticket_id_got_confirmed != 0){
+      if(substr_count($pass_status, "GNWL"))
+      {
+        $pass_status_no = intval(substr($pass_status, 4));
+        while(($row = $res->fetch_object())){
+        if(substr_count($row->status, "GNWL")){
+          $get_pass_status = $row->status;
+          $get_pass_status_no = intval(substr($get_pass_status, 4));
+
+          if($get_pass_status_no > $pass_status_no){
+            $get_pass_status = 'GNWL'.($get_pass_status_no - 1);
+
+            $rc = $stmt_pass_status_update->bind_param('si', $get_pass_status, $row->ticket_id);
+            $stmt_pass_status_update->execute();
+          }
+        }
+        }
+      }
+
+      $stmt_seat_update = 'ok';
+      if($GLOBALS['ticket_id_got_confirmed'] != 0){
         //allote seat to CNF passenger
         $pass_seat = "";
         if($pass_class == "3A")
@@ -141,54 +130,99 @@
         }
         $query="update PASSENGER set seat_no = ? where ticket_id = ?;";
         $stmt_seat_update = $mysqli->prepare($query);
-        $rc=$stmt_seat_update->bind_param('sii', $pass_seat, $ticket_id_got_confirmed);
+        $rc=$stmt_seat_update->bind_param('sii', $pass_seat, $GLOBALS['ticket_id_got_confirmed']);
         $stmt_seat_update->execute();
       }
 
+      /* ******************************************************************************************** */
+
       //update TRAIN_STATUS table
-      if($max_waitlist_no != 0)
+      $query="select _". $pass_class ." from TRAIN_STATUS where train_no = ? and date = ?";
+      $stmt_train_status = $mysqli->prepare($query);
+      $rc=$stmt_train_status->bind_param('is', $pass_train_no, $pass_date);
+      $stmt_train_status->execute();
+      $res=$stmt_train_status->get_result();
+      $row=$res->fetch_object();
+      $train_status = $row->{"_". $pass_class};
+
+      if(substr_count($train_status,"NO_AVL"))
       {
-        $train_status = 'GNWL'.($max_waitlist_no - 1);
-        if($max_waitlist_no == 1){
+        $train_status = 'AVL1';
+      }
+      else if(substr_count($train_status,"AVL"))
+      {
+        $train_status_no = intval(substr($train_status, 3));
+        $train_status = 'AVL'.($train_status_no + 1);
+      }
+      else if(substr_count($train_status,"GNWL"))
+      {
+        $train_status_no = intval(substr($train_status, 4));
+        if($train_status_no == 1){
           $train_status = 'NO_AVL';
+        }else{
+          $train_status = 'GNWL'.($train_status_no - 1);
         }
-        $query="update TRAIN_STATUS set " . "_" . $pass_class ." = ? where train_no = ? and date = ?";
-        $stmt_train_status_update = $mysqli->prepare($query); //prepare sql and bind it later
-        $rc=$stmt_train_status_update->bind_param('sis', $train_status, $pass_train_no, $pass_date);
-        $stmt_train_status_update->execute();
       }
-      else
-      {
-        $query="select _". $pass_class ." from TRAIN_STATUS where train_no = ? and date = ?";
-        $stmt_train_status = $mysqli->prepare($query);
-        $rc=$stmt_train_status->bind_param('is', $pass_train_no, $pass_date);
-        $stmt_train_status->execute();
-        $res=$stmt_train_status->get_result();
-        $row=$res->fetch_object();
-        $train_status = $row->{"_". $pass_class};
 
-        if(substr_count($train_status,"AVL"))
-        {
-          $st_no = substr($train_status, 3);
-          $train_status = 'AVL'.(intval($st_no) + 1);
-        }
+      $query="update TRAIN_STATUS set " . "_" . $pass_class ." = ? where train_no = ? and date = ?";
+      $stmt_train_status_update = $mysqli->prepare($query); //prepare sql and bind it later
+      $rc=$stmt_train_status_update->bind_param('sis', $train_status, $pass_train_no, $pass_date);
+      $stmt_train_status_update->execute();
 
-        $query="update TRAIN_STATUS set " . "_" . $pass_class ." = ? where train_no = ? and date = ?";
-        $stmt_train_status_update = $mysqli->prepare($query); //prepare sql and bind it later
-        $rc=$stmt_train_status_update->bind_param('sis', $train_status, $pass_train_no, $pass_date);
-        $stmt_train_status_update->execute();
-      }
       $pass_status = 'CNL';
-      
-      if($stmt_cancel && $stmt_pass && $stmt_ticket_status && $stmt_pass_status)
-      {
-        $succ = "Cancelled Successfully!";
+
+      if($stmt_cancel){
+        if($stmt_pass){
+          if($stmt_ticket_status){
+            if($stmt_pass_status){
+              if($stmt_pass_status_update){
+                if($stmt_seat_update){
+                  if($stmt_train_status){
+                    if($stmt_train_status_update){
+                      $succ = "Cancelled Successfully!".$GLOBALS['ticket_id_got_confirmed'];
+                      $mysqli->commit();
+                    }
+                    else
+                    {
+                      $err = "stmt_train_status_update failed";
+                    }
+                  }
+                  else
+                  {
+                    $err = "stmt_train_status failed";
+                  }
+                }
+                else
+                {
+                  $err = "stmt_seat_update failed";
+                }
+              }
+              else
+              {
+                $err = "stmt_pass_status_update failed";
+              }
+            }
+            else
+            {
+              $err = "stmt_pass_status failed";
+            }
+          }
+          else
+          {
+            $err = "stmt_ticket_status failed";
+          }
+        }
+        else
+        {
+          $err = "stmt_pass failed";
+        }
       }
       else
       {
-        $err = "Please Try Again Or Try Later";
+        $err = "stmt_cancel failed";
       }
     }
+    $mysqli->autocommit(true);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -295,8 +329,12 @@
                   <div class="col-sm-6 mt-5">
                     <form method ="POST">
                       <p class="text-right">
-                        <input class="btn btn-space btn-outline-danger" value ="Cancel Train" name = "Cancel_Train" type="submit">
-                        <a href="./user-cancel-train.php" class="btn btn-space btn-secondary">Cancel</a>
+                        <?php if(!isset($_POST['Cancel_Train'])){ ?>
+                          <input class="btn btn-space btn-outline-danger" value ="Cancel Train" name = "Cancel_Train" type="submit">
+                          <a href="./user-cancel-train.php" class="btn btn-space btn-secondary">Cancel</a>
+                        <?php }else{ ?>
+                          <a href="./user-cancel-train.php" class="btn btn-space btn-secondary">Back</a>
+                        <?php } ?>
                       </p>
                     </form>
                   </div>

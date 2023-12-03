@@ -20,7 +20,7 @@ if (isset($_POST['user_login'])) {
     else
 		  header("Location: http://$host$uri/$extra");
   } else {
-    $error = "Access Denied Please Check Your Credentials";
+    $error = "Invalid login credentials. Please try again";
   }
 }
 ?>
@@ -44,7 +44,7 @@ if (isset($_POST['user_login'])) {
     <!--This code for injecting an alert-->
     <script>
       setTimeout(function() {
-          swal("Failed!", "<?php echo $error; ?>!", "error");
+          swal("Failed!", "<?php echo $error; ?>", "error");
         },
         100);
     </script>

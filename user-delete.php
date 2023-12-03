@@ -1,6 +1,9 @@
 <?php
     session_start();
-    $aid = $GET['username'];
+    include('assets/inc/config.php');
+    include('assets/inc/checklogin.php');
+    check_login();
+    $aid=$_SESSION['user_id'];
     
     // delete from user 
     $stmt = $mysqli->prepare("delete from USER where username = ?");

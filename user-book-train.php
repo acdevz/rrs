@@ -5,7 +5,15 @@
   include('assets/inc/checklogin.php');
   check_login();
   $aid=$_SESSION['user_id'];
-  $from = $to = $date = '';
+
+  //Get user details
+  $from = $to = $date = "";
+  if(isset($_GET['from']) && isset($_GET['to']) && isset($_GET['date'])){
+    $from = $_GET['from'];
+    $to = $_GET['to'];
+    $date = $_GET['date'];
+  }
+
   // Process form submission
   if(isset($_POST['search'])) {
     $from = $_POST['from'];
@@ -83,7 +91,7 @@
                       <div class="form-group col-md-4">
                         <label for="date">Date</label>
                         <input type="date" class="form-control" id="date" name="date" min="<?php echo date("Y-m-d");?>" 
-                        max="<?php echo date('Y-m-d', strtotime(date("Y-m-d"). ' + 30 days'));?>" value="<?php echo $date ? $date : date("Y-m-d") ?>" required>
+                        max="<?php echo date('Y-m-d', strtotime(date("Y-m-d"). ' + 20 days'));?>" value="<?php echo $date ? $date : date("Y-m-d") ?>" required>
                       </div>
                       <div class="form-group col-md-12 text-right pr-4">
                         <button type="submit" name="search" class="btn btn-primary px-4 py-1">Search</button>
@@ -133,6 +141,8 @@
 
                         from TRAIN T, TRAIN_STATUS TS, STATION S1, STATION S2
                         where TS.date=? and S1.station_name=? and S2.station_name=?
+                        and S1.departure_time >= curtime()
+                        and S1.station_code != S2.station_code
                         and T.train_no = TS.train_no
                         and S1.train_no = T.train_no and T.train_no = S2.train_no;";
 
@@ -158,11 +168,11 @@
                       <td colspan="8">
                         <div class="container mx-0">
                           <div class="row">
-                            <div class="col-md-2 p-0 pr-2">
+                            <div class="col-md-2 p-0 pr-2 pb-1">
                             <?php echo
                               "<a href='user-book-passenger-details.php?train_no=$row->train_no&train_name=$row->name&from=$row->from&to=$row->to&from_name=$row->from_name&to_name=$row->to_name&from_date=$row->from_date&from_time=$row->from_time&to_date=$row->to_date&to_time=$row->to_time&class=SL&status=$row->status_sl&fare=$row->fare_sl' class='text-reset'>"
                             ?>
-                              <div class="box border rounded <?php echo substr_count($row->status_sl,"WL") || substr_count($row->status_sl,"NO_AVL") ? 'border-danger' : 'border-success'; ?>">
+                              <div class="box border <?php echo substr_count($row->status_sl,"WL") || substr_count($row->status_sl,"NO_AVL") ? 'border-danger' : 'border-success'; ?>" style="background-color: rgba(<?php echo substr_count($row->status_sl,'WL') || substr_count($row->status_sl,'NO_AVL') ? '255, 221, 221, 0.25' : '180, 255, 180, 0.15' ?>);border-radius: 4px;">
                                 <div class="box-content px-4 py-2">
                                   <h4 class="class-type m-0 my-1 font-weight-bold">SL</h4>
                                   <div class="d-flex justify-content-between fs-3">
@@ -177,7 +187,7 @@
                             <?php echo
                               "<a href='user-book-passenger-details.php?train_no=$row->train_no&train_name=$row->name&from=$row->from&to=$row->to&from_name=$row->from_name&to_name=$row->to_name&from_date=$row->from_date&from_time=$row->from_time&to_date=$row->to_date&to_time=$row->to_time&class=3A&status=$row->status_3a&fare=$row->fare_3a' class='text-reset'>"
                             ?>
-                              <div class="box border rounded <?php echo substr_count($row->status_3a,"WL") || substr_count($row->status_3a,"NO_AVL") ? 'border-danger' : 'border-success'; ?>">
+                              <div class="box border <?php echo substr_count($row->status_3a,"WL") || substr_count($row->status_3a,"NO_AVL") ? 'border-danger' : 'border-success'; ?>" style="background-color: rgba(<?php echo substr_count($row->status_3a,'WL') || substr_count($row->status_3a,'NO_AVL') ? '255, 221, 221, 0.25' : '180, 255, 180, 0.15' ?>);border-radius: 4px;">
                                 <div class="box-content px-4 py-2">
                                   <h4 class="class-type m-0 my-1 font-weight-bold">3A</h4>
                                   <div class="d-flex justify-content-between fs-3">
@@ -192,7 +202,7 @@
                             <?php echo
                               "<a href='user-book-passenger-details.php?train_no=$row->train_no&train_name=$row->name&from=$row->from&to=$row->to&from_name=$row->from_name&to_name=$row->to_name&from_date=$row->from_date&from_time=$row->from_time&to_date=$row->to_date&to_time=$row->to_time&class=2A&status=$row->status_2a&fare=$row->fare_2a' class='text-reset'>"
                             ?>
-                              <div class="box border rounded <?php echo substr_count($row->status_2a,"WL") || substr_count($row->status_2a,"NO_AVL") ? 'border-danger' : 'border-success'; ?>">
+                              <div class="box border <?php echo substr_count($row->status_2a,"WL") || substr_count($row->status_2a,"NO_AVL") ? 'border-danger' : 'border-success'; ?>" style="background-color: rgba(<?php echo substr_count($row->status_2a,'WL') || substr_count($row->status_2a,'NO_AVL') ? '255, 221, 221, 0.25' : '180, 255, 180, 0.15' ?>);border-radius: 4px;">
                                 <div class="box-content px-4 py-2">
                                   <h4 class="class-type m-0 my-1 font-weight-bold">2A</h4>
                                   <div class="d-flex justify-content-between fs-3">
@@ -207,7 +217,7 @@
                             <?php echo
                               "<a href='user-book-passenger-details.php?train_no=$row->train_no&train_name=$row->name&from=$row->from&to=$row->to&from_name=$row->from_name&to_name=$row->to_name&from_date=$row->from_date&from_time=$row->from_time&to_date=$row->to_date&to_time=$row->to_time&class=1A&status=$row->status_1a&fare=$row->fare_1a' class='text-reset'>"
                             ?>
-                              <div class="box border rounded <?php echo substr_count($row->status_1a,"WL") || substr_count($row->status_1a,"NO_AVL") ? 'border-danger' : 'border-success'; ?>">
+                              <div class="box border <?php echo substr_count($row->status_1a,"WL") || substr_count($row->status_1a,"NO_AVL") ? 'border-danger' : 'border-success'; ?>" style="background-color: rgba(<?php echo substr_count($row->status_1a,'WL') || substr_count($row->status_1a,'NO_AVL') ? '255, 221, 221, 0.25' : '180, 255, 180, 0.15' ?>);border-radius: 4px;">
                                 <div class="box-content px-4 py-2">
                                   <h4 class="class-type m-0 my-1 font-weight-bold">1A</h4>
                                   <div class="d-flex justify-content-between fs-3">

@@ -229,8 +229,10 @@
 
                     <div class="col-sm-6">
                         <p class="text-right">
+                        <?php if(!isset($_POST['Book_Train'])){ ?>
                           <input class="btn btn-space btn-outline-success" value ="Book Train" name = "Book_Train" type="submit">
-                          <a href="./user-book-train.php" class="btn btn-space btn-outline-danger">Cancel</a>
+                          <a href="./user-book-train.php?from=<?php echo $pass_from_name ?>&to=<?php echo $pass_to_name ?>&date=<?php echo $pass_from_date ?>" class="btn btn-space btn-secondary">Cancel</a>
+                        <?php } ?>
                         </p>
                     </div>
                   </form>
