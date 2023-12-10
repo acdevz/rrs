@@ -112,6 +112,7 @@
                         <th>To</th>
                         <th>Date</th>
                         <th>Arrival</th>
+                        <th>Runs On</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -137,11 +138,11 @@
                         TS._2A as 'status_2a',
                         round((S2.dist - S1.dist) * f_2a, 2) as 'fare_2a',
                         TS._3A as 'status_3a',
-                        round((S2.dist - S1.dist) * f_3a, 2) as 'fare_3a'
+                        round((S2.dist - S1.dist) * f_3a, 2) as 'fare_3a',
+                        T.mon, T.tue, T.wed, T.thu, T.fri, T.sat, T.sun, S1.day
 
                         from TRAIN T, TRAIN_STATUS TS, STATION S1, STATION S2
-                        where TS.date=? and S1.station_name=? and S2.station_name=?
-                        and S1.departure_time >= curtime()
+                        where date_add(TS.date, interval (S1.day - 1) day)=? and S1.station_name=? and S2.station_name=?
                         and S1.station_code != S2.station_code
                         and T.train_no = TS.train_no
                         and S1.train_no = T.train_no and T.train_no = S2.train_no;";
@@ -163,6 +164,17 @@
                         <td class="center"><?php echo $row->to;?></td>
                         <td class="center"><?php echo $row->to_date;?></td>
                         <td class="center"><?php echo $row->to_time;?></td>
+                        <td>
+                          <span class="h5">
+                            <span class="<?php echo $row->mon == 'Y' && $row->day == 1 || $row->sun == 'Y' && $row->day == 2 || $row->sat == 'Y' && $row->day == 3 ? 'font-weight-bold text-danger' : 'font-weight-bold text-secondary' ?> mr-1">M</span>
+                            <span class="<?php echo $row->tue == 'Y' && $row->day == 1 || $row->mon == 'Y' && $row->day == 2 || $row->sun == 'Y' && $row->day == 3 ? 'font-weight-bold text-danger' : 'font-weight-bold text-secondary' ?> mr-1">T</span>
+                            <span class="<?php echo $row->wed == 'Y' && $row->day == 1 || $row->tue == 'Y' && $row->day == 2 || $row->mon == 'Y' && $row->day == 3 ? 'font-weight-bold text-danger' : 'font-weight-bold text-secondary' ?> mr-1">W</span>
+                            <span class="<?php echo $row->thu == 'Y' && $row->day == 1 || $row->wed == 'Y' && $row->day == 2 || $row->tue == 'Y' && $row->day == 3 ? 'font-weight-bold text-danger' : 'font-weight-bold text-secondary' ?> mr-1">T</span>
+                            <span class="<?php echo $row->fri == 'Y' && $row->day == 1 || $row->thu == 'Y' && $row->day == 2 || $row->wed == 'Y' && $row->day == 3 ? 'font-weight-bold text-danger' : 'font-weight-bold text-secondary' ?> mr-1">F</span>
+                            <span class="<?php echo $row->sat == 'Y' && $row->day == 1 || $row->fri == 'Y' && $row->day == 2 || $row->thu == 'Y' && $row->day == 3 ? 'font-weight-bold text-danger' : 'font-weight-bold text-secondary' ?> mr-1">S</span>
+                            <span class="<?php echo $row->sun == 'Y' && $row->day == 1 || $row->sat == 'Y' && $row->day == 2 || $row->fri == 'Y' && $row->day == 3 ? 'font-weight-bold text-danger' : 'font-weight-bold text-secondary' ?> mr-1">S</span>
+                          </span>
+                        </td>
                       </tr>
                       <tr class="odd gradeX even gradeC odd gradeA even gradeA">
                       <td colspan="8">

@@ -12,23 +12,41 @@
 			$user_uname=$_POST['user_uname'];
 			$user_email=$_POST['user_email'];
 			$user_pwd=sha1(md5($_POST['user_pwd']));
-      //sql to insert captured values
-			$query="insert into USER (username, first_name, last_name, email, mobile_no, country, password) values(?,?,?,?,?,?,?)";
-			$stmt = $mysqli->prepare($query);
-			$rc=$stmt->bind_param('sssssss', $user_uname, $user_fname, $user_lname, $user_email, $user_phone, $user_addr, $user_pwd);
-			$stmt->execute();
-			/*
-			*Use Sweet Alerts Instead Of This Fucked Up Javascript Alerts
-			*echo"<script>alert('Successfully Created Account Proceed To Log In ');</script>";
-			*/ 
-			//declare a varible which will be passed to alert function
-			if($stmt)
-			{
-				$success = "Registered Successfully! Proceed To Log In";
-			}
-			else {
-				$err = "Please Try Again Or Try Later!";
-			}
+
+      //check for email, username and phone number already exist
+      $check_email ="SELECT * FROM USER WHERE email='$user_email'";
+      $check_username ="SELECT * FROM USER WHERE username='$user_uname'";
+      $check_phone ="SELECT * FROM USER WHERE mobile_no='$user_phone'";
+      $run_email = mysqli_query($mysqli, $check_email);
+      $run_username = mysqli_query($mysqli, $check_username);
+      $run_phone = mysqli_query($mysqli, $check_phone);
+      if(mysqli_num_rows($run_email)>0)
+      {
+        $err = "Email Address Already Exists!";
+      }
+      elseif(mysqli_num_rows($run_username)>0)
+      {
+        $err = "Username Already Exists!";
+      }
+      elseif(mysqli_num_rows($run_phone)>0)
+      {
+        $err = "Phone Number Already Exists!";
+      }
+      else
+      {
+        //sql to insert captured values
+        $query="insert into USER (username, first_name, last_name, email, mobile_no, country, password) values(?,?,?,?,?,?,?)";
+        $stmt = $mysqli->prepare($query);
+        $rc=$stmt->bind_param('sssssss', $user_uname, $user_fname, $user_lname, $user_email, $user_phone, $user_addr, $user_pwd);
+        $stmt->execute();
+        if($stmt)
+        {
+          $success = "Registered Successfully! Proceed To Log In";
+        }
+        else {
+          $err = "Please Try Again Or Try Later!";
+        }
+      }
 		}
 ?>
 <!--End Server Side-->
@@ -53,7 +71,7 @@
         <div class="main-content container-fluid">
           <div class="splash-container">
             <div class="card card-border-color card-border-color-success">
-              <div class="card-header"><img class="logo-img" src="assets/img/logo-xx.png" alt="logo" width="{conf.logoWidth}" height="27"><span class="splash-description">Passenger Registration Form</span></div>
+              <div class="card-header"><img class="logo-img" src="assets/img/logo.png" alt="logo" height="20"><span class="splash-description">Passenger Registration Form</span></div>
               <div class="card-body">
             
               <?php if(isset($success)) {?>

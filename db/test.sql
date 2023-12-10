@@ -29,15 +29,16 @@
 -- ALTER TABLE PASSENGER
 -- MODIFY COLUMN passenger_id INT NOT NULL AUTO_INCREMENT;
 
--- select * from STATION;
+-- select * from STATION order by train_no;
 select * from TICKET;
 select * from PASSENGER;
 
 -- delete from TICKET;
 -- delete from PASSENGER;
 -- select * from TRAIN;
-
--- select * from STATION;
+-- select * from TRAIN_STATUS;
+-- select * from STARTS;
+-- select * from STOPS;
 
 -- delete from TICKET where ticket_id = 890374;
 -- delete from PASSENGER where ticket_id = 890374;
@@ -47,9 +48,11 @@ select * from PASSENGER;
 
 -- update TICKET set status = 'CNL' where ticket_id = 836491;
 
-select * from TRAIN_STATUS;
+-- select * from TRAIN_STATUS;
 
-select T.status, T.ticket_id from TICKET T, PASSENGER P where T.ticket_id = P.ticket_id
-and T.train_no = 12380 and T.date = '2023-12-10' and P.class = 'SL';
+-- select T.status, T.ticket_id from TICKET T, PASSENGER P where T.ticket_id = P.ticket_id
+-- and T.train_no = 12380 and T.date = '2023-12-10' and P.class = 'SL';
 
--- select * from USER;
+select * from USER;
+
+-- delete from STATION where train_no = 12318;

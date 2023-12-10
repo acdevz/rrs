@@ -11,31 +11,6 @@
   <div class="container-fluid">
     <div class="be-navbar-header"><a class="navbar-brand" href="user-dashboard.php"></a>
     </div>
-    <div class="page-title"><span>
-    
-    <?php 
-      // $welcome_string="Hello"; 
-      // $numeric_date=date("G");
-      // if($numeric_date>=0&&$numeric_date<=11) 
-      // $welcome_string="Good morning,"; 
-      // else if($numeric_date>=12&&$numeric_date<=17) 
-      // $welcome_string="Good afternoon,"; 
-      // else if($numeric_date>=18&&$numeric_date<=23) 
-      // $welcome_string="Good evening,"; 
-      // echo "$welcome_string"; 
-
-      $greet = array(
-        "Hi, Explorer!",
-        "Hello, Adventurer!",
-        "Ready, Jetsetter?",
-        "Greetings, Voyager!",
-      );
-      $greet = $greet[array_rand($greet)];
-
-      echo $greet;
-    ?>
-    
-    </span></div>
     <div class="be-right-navbar">
       <ul class="nav navbar-nav float-right be-user-nav">
         <li class="nav-item h4 px-2 my-auto mx-auto"><?php echo $aid; ?></li>

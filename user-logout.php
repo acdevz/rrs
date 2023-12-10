@@ -4,10 +4,9 @@
     session_destroy();
     $host = $_SERVER['HTTP_HOST'];
     $uri  = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
-    $extra="user-login.php";
     if($host == 'localhost')
-		header("Location: user-login.php");
+		header("Location: index.php");
     else
-		header("Location: http://$host$uri/$extra");
+		header("Location: http://$host$uri/");
     exit;
 ?>

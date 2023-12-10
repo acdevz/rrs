@@ -12559,10 +12559,11 @@ canvas {
 .be-top-header .be-navbar-header .navbar-brand {
   line-height: 60px;
   height: 60px;
-  width: 142px;
+  width: 250px;
   background-image: url(../img/logo.png);
   background-repeat: no-repeat;
   background-position: 20px center;
+  background-size: 182.3px 20.7px;
   padding: 0 20px;
   margin: 0;
   display: block;
@@ -17722,7 +17723,7 @@ li.L9 {
 .invoice-logo {
   height: 54px;
   min-width: 204px;
-  background-image: url(../img/logo-xx.png);
+  background-image: url(../img/logo.png);
   background-repeat: no-repeat;
   background-position: 0;
 }
@@ -17738,15 +17739,6 @@ li.L9 {
     margin: 0 auto 20px;
     float: none;
     min-width: auto;
-  }
-}
-@media print {
-  .invoice-logo {
-    height: 27px !important;
-    width: 102px !important;
-    background-image: url(../img/logo.png) !important;
-    display: block !important;
-    background-repeat: no-repeat !important;
   }
 }
 .invoice-order {
