@@ -167,7 +167,7 @@
                   <table class="table table-lg table-borderless custom-table">
                     <tbody>
                       <tr>
-                        <th colspan=2 class="text-center font-weight-bold h4"><?php echo $pass_train_name .' ('. $pass_train_no .')'; ?></td>
+                        <th colspan=2 class="text-center h3"><?php echo $pass_train_name .' ('. $pass_train_no .')'; ?></td>
                       </tr>
                       <tr>
                         <th class="text-center h5">From Station</th>
