@@ -143,7 +143,7 @@
 
                         from TRAIN T, TRAIN_STATUS TS, STATION S1, STATION S2
                         where date_add(TS.date, interval (S1.day - 1) day)=? and S1.station_name=? and S2.station_name=?
-                        and S1.station_code != S2.station_code
+                        and (S2.dist - S1.dist) > 0
                         and T.train_no = TS.train_no
                         and S1.train_no = T.train_no and T.train_no = S2.train_no;";
 
