@@ -1,6 +1,6 @@
-# Train Booking System
+# Railway Reservation System
 
-This project is a train booking system where users can book, cancel, and view their train bookings.
+This project is a train reservation system where users can book, cancel, and view their train bookings.
 
 ## Features
 
