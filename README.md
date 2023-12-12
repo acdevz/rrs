@@ -14,18 +14,11 @@ This project is a train reservation system where users can book, cancel, and vie
 - User Profile: Users can view and update their profile through the [`user-profile.php`](user-profile.php) and [`user-profile-update.php`](user-profile-update.php) pages respectively.
 - Print Ticket: Users can print their tickets through the [`user-print-ticket.php`](user-print-ticket.php) page.
 
-## Installation
-
-Provide instructions on how to install and setup your project here.
 
 ## Usage
 
-Provide instructions on how to use your project after it's installed here.
+Please note that this project is for educational purposes only and should not be used in a production environment.
 
 ## Contributing
 
 If you would like to contribute, please fork the repository and use a feature branch. Pull requests are warmly welcome.
-
-## License
-
-Provide information about the project's license here.
