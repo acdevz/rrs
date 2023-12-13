@@ -91,7 +91,7 @@
                       <div class="form-group col-md-4">
                         <label for="date">Date</label>
                         <input type="date" class="form-control" id="date" name="date" min="<?php echo date("Y-m-d");?>" 
-                        max="<?php echo date('Y-m-d', strtotime(date("Y-m-d"). ' + 20 days'));?>" value="<?php echo $date ? $date : date("Y-m-d") ?>" required>
+                        max="<?php echo date('Y-m-d', strtotime(date("Y-m-d"). ' + 7 days'));?>" value="<?php echo $date ? $date : date("Y-m-d") ?>" required>
                       </div>
                       <div class="form-group col-md-12 text-right pr-4">
                         <button type="submit" name="search" class="btn btn-primary px-4 py-1">Search</button>
